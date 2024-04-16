@@ -1,89 +1,134 @@
 //ROCK PAPER SCISSORS
-let inputBtn = document.querySelector(".input-btn");
-let userInput = document.querySelector("#input");
 let userOutput = document.querySelector(".human-output");
 let aiOutput = document.querySelector(".ai-output");
 let resultOutput = document.querySelector(".result-container");
 let draw = `It's a draw! Your answers are the same.`;
-let globalUserOutput ;
+let rockChoice = document.querySelector("#rock-choice-btn");
+let paperChoice = document.querySelector("#paper-choice-btn");
+let scissorsChoice = document.querySelector("#scissors-choice-btn");
+let btnContainer = document.querySelector('.container-1');
+let compScore = document.querySelector('.comp-score');
+let compCounter = 0;
+let playerScore = document.querySelector('.player-score');
+let playerCounter = 0;
+let winnerDisplay = document.querySelector('.container-5');   //attach the winner container
+let globalUserOutput;
 let globalComputerOutput;
 const array1 = ['Rock', 'Paper', 'Scissors'];
 
 
 
-// receives user input
-function displayUserInput(){
-    userInput.value = userInput.value.toLowerCase();
-    userInput.value = userInput.value.charAt(0).toUpperCase() + userInput.value.slice(1);
-    // console.log(userInput.value);
-    if(userInput.value === 'Rock' || userInput.value === 'Paper' || userInput.value === 'Scissors'){
-        userOutput.textContent = userInput.value;
-        globalUserOutput = userOutput.textContent;
-        userInput.value = '';
-    }
-    else if (userInput.value === '' || userInput.value === null || userInput.value === undefined){
-        {alert("This is not a move on this Earth. Try again noob.");}
-    }
-    else{alert("This is not a move on this Earth. Try again noob.");}
-}
-
-
-
-// function where computer chooses move
-function generateRandom(min, max){
-    return Math.random() * (max - min) + min;
-}
-
+// function outputs computer choice 
 function getComputerChoice(){
-    aiOutput.textContent = array1[(Math.floor(generateRandom(1, 4))) - 1];
+    function func1(min, max){
+        return Math.random() * (max - min) + min;
+    }
+    aiOutput.textContent = array1[(Math.floor(func1(1, 4))) - 1];
     return globalComputerOutput = aiOutput.textContent;
 }
 
 
 
+function displayScore(){
+    compScore.textContent = `${compCounter}xp`;
+    playerScore.textContent = `${playerCounter}xp`;
+    if(compCounter === 5){
+        winnerDisplay.textContent = 'Computers win! It\'s apocalypse...';
+        compCounter = 0;
+        playerCounter = 0;
+        compScore.textContent= `${compCounter}xp`;
+        playerScore.textContent = `${playerCounter}xp`;
+    };
+    if(playerCounter === 5){
+        winnerDisplay.textContent = 'Humans won! Humanity is safe.';
+        compCounter = 0;
+        playerCounter = 0;
+        compScore.textContent= `${compCounter}xp`;
+        playerScore.textContent = `${playerCounter}xp`;
+    };
+}
 
-// results function
-function printResults(){
-    
+function printResults(callback){
     // Rock version
-        if(globalUserOutput == 'Rock' && globalComputerOutput == 'Paper'){
-            return resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
-        }
-        if (globalUserOutput == 'Rock' && globalComputerOutput == 'Rock'){
-            return resultOutput.textContent = draw;
-        }
-        if(globalUserOutput == 'Rock' && globalComputerOutput == 'Scissors'){
-            return resultOutput.textContent = `You win! ${coconut} beats ${globalComputerOutput}.`;
-        } 
+    if(globalUserOutput == 'Rock' && globalComputerOutput == 'Paper'){
+        resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
+        compCounter += 1;
+        playerCounter += 0;
+        callback();
+    }
+    if (globalUserOutput == 'Rock' && globalComputerOutput == 'Rock'){
+        resultOutput.textContent = draw;
+        compCounter += 0;
+        playerCounter += 0;
+        callback();
+    }
+    if(globalUserOutput == 'Rock' && globalComputerOutput == 'Scissors'){
+        resultOutput.textContent = `You win! ${globalUserOutput} beats ${globalComputerOutput}.`;
+        compCounter += 0;
+        playerCounter += 1;
+        callback();
+    } 
 
 
-        // Paper version
-        if(globalUserOutput == 'Paper' && globalComputerOutput == 'Paper'){
-            return resultOutput.textContent = draw;
-        }
-        if (globalUserOutput == 'Paper' && globalComputerOutput == 'Rock'){
-            return resultOutput.textContent = `You win! ${globalUserOutput} beats ${globalComputerOutput}.`;
-        }
-        if(globalUserOutput == 'Paper' && globalComputerOutput == 'Scissors'){
-            return resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
-        } 
+    // Paper version
+    if(globalUserOutput == 'Paper' && globalComputerOutput == 'Paper'){
+        resultOutput.textContent = draw;
+        compCounter += 0;
+        playerCounter += 0;
+        callback();
+    }
+    if (globalUserOutput == 'Paper' && globalComputerOutput == 'Rock'){
+        resultOutput.textContent = `You win! ${globalUserOutput} beats ${globalComputerOutput}.`;
+        compCounter += 0;
+        playerCounter += 1;
+        callback();
+    }
+    if(globalUserOutput == 'Paper' && globalComputerOutput == 'Scissors'){
+        resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
+        compCounter += 1;
+        playerCounter += 0;
+        callback();
+    } 
 
 
-        // Scissors version
-        if(globalUserOutput == 'Scissors' && globalComputerOutput == 'Paper'){
-            return resultOutput.textContent = `You win! ${globalUserOutput} beats ${globalComputerOutput}.`;
-        }
-        if (globalUserOutput == 'Scissors' && globalComputerOutput == 'Rock'){
-            return resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
-        }
-        if(globalUserOutput == 'Scissors' && globalComputerOutput == 'Scissors'){
-            return resultOutput.textContent = draw;
-        } 
+    // Scissors version
+    if(globalUserOutput == 'Scissors' && globalComputerOutput == 'Paper'){
+        resultOutput.textContent = `You win! ${globalUserOutput} beats ${globalComputerOutput}.`;
+        compCounter += 0;
+        playerCounter += 1;
+        callback();
+    }
+    if (globalUserOutput == 'Scissors' && globalComputerOutput == 'Rock'){
+        resultOutput.textContent = `You lose! ${globalComputerOutput} beats ${globalUserOutput}.`;
+        compCounter += 1;
+        playerCounter += 0;
+        callback();
+    }
+    if(globalUserOutput == 'Scissors' && globalComputerOutput == 'Scissors'){
+        resultOutput.textContent = draw;
+        compCounter += 0;
+        playerCounter += 0;
+        callback();
+    } 
 }
 
 
-inputBtn.addEventListener("click", () =>{
-    displayUserInput();
+// displays user input
+btnContainer.addEventListener('click', (event) => {
+    switch(event.target.id){                                  // input has to have id, not class, otherwise this doesn't work
+        case 'rock-choice-btn':
+            userOutput.textContent = 'Rock';
+            globalUserOutput = userOutput.textContent;
+            break;
+        case 'paper-choice-btn':
+            userOutput.textContent = 'Paper';
+            globalUserOutput = userOutput.textContent;
+            break;
+        case 'scissors-choice-btn':
+            userOutput.textContent = 'Scissors';
+            globalUserOutput = userOutput.textContent;
+            break;
+    }
     getComputerChoice();
-    printResults();
+    printResults(displayScore);
 });

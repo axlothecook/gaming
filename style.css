@@ -29,7 +29,7 @@ body{
     gap: 15px;
 }
 
-.container-2{
+.container-2, .container-4{
     display: flex;
     flex-flow: row wrap;
     gap: 58px;
@@ -39,17 +39,18 @@ body{
     text-align: center;
 }
 
-#input, .input-btn{
+button{
+    width: 150px;
     border: none;
     border-radius: 20px;
     font-size: 20px;
     padding: 10px;
 }
 
-.input-btn:hover{
-    background-color: aqua;
+button:hover{
+    background-color: salmon;
 }
 
-.input-btn:active{
-    background-color: rgb(7, 156, 156);
+button:active{
+    background-color: rgba(250, 128, 114, 0.623);
 }
